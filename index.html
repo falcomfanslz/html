@@ -1,11 +1,148 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
   <head>
     <meta charset="utf-8">
-    <title>Hello World</title>
-  </head>
-  <body>
-    Hello World!!!!
-    <script src="main.js" charset="utf-8"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>来点按钮吧</title>
+
+    <!-- Bootstrap -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script>
+		var index = 0;
+		var music;
+		function random(){
+			var id = parseInt(Math.random()*9+1); 
+			$('button[id="button'+id+'"]').attr("class","btn btn-lg btn-warning");
+		}
+		function play(){
+			var now = Number(index)%Number(music.length)+1;
+			playSound("./wav/"+music[now-1]+".wav");
+		}
+		function playSound(src){
+			$('audio[id="snd"]').attr("src",src);
+			var audio = document.getElementById("snd");
+			audio.load();
+			audio.play();
+		}
+	</script>
+	</head>
+	<body>
+		<audio src="" id="snd" preload="true"></audio>
+		<div class="row">
+	    <div class="col-md-4">
+		</div>
+        <div class="col-md-4">
+			<br />
+			<br />	
+			<div class="alert alert-info" role="alert">
+				<span>你总共点击了</span><strong name="count">0</strong><span>次</span>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button1">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button2">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button3">点我！</button>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button4">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-warning" style="width:80%" name="game_bonus" id="button5">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button6">点我！</button>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button7">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button8">点我！</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-lg btn-primary" style="width:80%" name="game_bonus" id="button9">点我！</button>
+				</div>
+			</div>
+			<br />
+			<span>
+				<span name="sentence"></span>
+			</span>
+		</div>
+		<div class="col-md-4">
+		</div>
+    </div>
+
+	<audio src="./wav/1.wav" preload="true"></audio>
+	<audio src="./wav/2.wav" preload="true"></audio>
+	<audio src="./wav/3.wav" preload="true"></audio>
+	<audio src="./wav/4.wav" preload="true"></audio>
+	<audio src="./wav/5.wav" preload="true"></audio>
+	<audio src="./wav/6.wav" preload="true"></audio>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootbox.min.js"></script>
+	<script>
+		$(function(){ 
+			var array = "其实有一句话一直想对你说。。。".split("");
+			var fool = "<br />愚人节快乐！";
+			var ss = "";
+			music = "115566544332215544332554433211556654433221".split("");
+			//start();
+			$('button[name="game_bonus"]').click(function(){
+				//判断是否点击的是黄色按钮
+				if($(this).attr("class")=="btn btn-lg btn-warning"){
+					//播放音频
+					play();
+					//清除class信息
+					$(this).attr("class","btn btn-lg btn-primary");
+					//文字变化
+					for(var i = 0;i<array.length;i++){
+						ss = ss+array[i];
+						if(i==index){
+							break;
+						}
+						if(i==array.length-1){
+							ss = ss+fool;
+						}
+					}
+					$('span[name="sentence"]').html(ss);
+					ss = ""
+					index++;
+					$('strong[name="count"]').html(index);
+					//休息5秒
+					//setTimeout("random()",1000);
+					//你会点这么多次吗？
+					if(index>=28&&index<56){
+						$('span[name="sentence"]').html("点了好多次呢");
+					}else if(index>=56&&index<=84){
+						$('span[name="sentence"]').html("听听我的真心话吧，这次是真的");
+					}else if(index>=112){
+						$('span[name="sentence"]').html("我喜欢你，希望毕业以后能在一起---By生命的轨迹");
+					}
+					random();
+				}
+			});
+		}); 
+	</script>
   </body>
 </html>
